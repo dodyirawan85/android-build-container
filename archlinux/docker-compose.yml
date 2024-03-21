@@ -1,0 +1,7 @@
+services:
+  archlinux-buildcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build.sh:/root/buildroot/build.sh

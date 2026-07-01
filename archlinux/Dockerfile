@@ -14,7 +14,7 @@ RUN pacman -S --needed --noconfirm \
     git \
     inetutils \
     lld \
-    openssl-1.1 \
+    openssl \
     python3 \
     repo
 

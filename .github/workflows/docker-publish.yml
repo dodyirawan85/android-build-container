@@ -1,0 +1,43 @@
+name: Publish Docker Images
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - tag: archlinux
+            context: ./archlinux
+          - tag: focal
+            context: ./ubuntu/20.04
+          - tag: noble
+            context: ./ubuntu/24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.tag }}
+          cache-from: type=gha,scope=${{ matrix.tag }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.tag }}

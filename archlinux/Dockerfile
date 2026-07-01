@@ -21,6 +21,3 @@ RUN pacman -S --needed --noconfirm \
 # Remove pacman cache and keys
 RUN pacman -Scc
 RUN rm -rf /etc/pacman.d/gnupg
-
-# Run build script on container start
-CMD ["bash", "./build.sh"]

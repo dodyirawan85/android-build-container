@@ -25,6 +25,3 @@ RUN apt clean && rm -rf /var/lib/apt/lists/*
 
 # [HACKS] Fix missing libmpfr.so.4
 RUN ln -s /usr/lib/x86_64-linux-gnu/libmpfr.so.6 /usr/lib/x86_64-linux-gnu/libmpfr.so.4
-
-# Run build script on container start
-CMD ["bash", "./build.sh"]

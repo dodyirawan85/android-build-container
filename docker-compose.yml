@@ -1,0 +1,27 @@
+services:
+  archlinux:
+    container_name: archlinux-builder
+    build:
+      context: ./archlinux
+    volumes:
+      - buildvol:/root
+    profiles: [archlinux]
+
+  focal:
+    container_name: focal-builder
+    build:
+      context: ./ubuntu/20.04
+    volumes:
+      - buildvol:/root
+    profiles: [focal]
+
+  noble:
+    container_name: noble-builder
+    build:
+      context: ./ubuntu/24.04
+    volumes:
+      - buildvol:/root
+    profiles: [noble]
+
+volumes:
+  buildvol:
